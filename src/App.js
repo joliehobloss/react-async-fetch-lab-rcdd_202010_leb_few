@@ -1,22 +1,29 @@
 // create your App component here
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
+ 
 class App extends Component {
-  
-constructor() {
-    super()
-    this.state = {
-    
-    }
+ 
+  state = {
+    peopleInSpace: []
   }
-
+ 
   render() {
-    
     return (
-      <div className="App">
-       
+      <div>
+        {this.state.peopleInSpace.map(person => person.name)}
       </div>
-    );
+    )
   }
-
-export default App;
+ 
+  componentDidMount() {
+    fetch('http://api.open-notify.org/astros.json')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          peopleInSpace: data.people
+        })
+      })
+  }
+}
+ 
+export default App
